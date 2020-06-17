@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-
+import 'package:fresco_app/provider/fruit_provider.dart';
+import 'package:fresco_app/src/pages/fruit_page.dart';
+import 'package:fresco_app/src/pages/recipesSelect_page.dart';
+import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MainPage extends StatefulWidget {
@@ -16,97 +19,111 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
   @override
   void initState() { 
     super.initState();
-    tabcontroller = TabController(length: 4,vsync: this);
+    tabcontroller = TabController(length: 5,vsync: this);
   }
 
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        backgroundColor: Colors.orange,
-        body: SafeArea(
-          child: Column( 
-            
-            children:<Widget>[
-              Row(children: <Widget>[
-                      Container(
-                          child: IconButton(
-                              icon: Icon(
-                                Icons.menu,
-                                color: Colors.white,
-                              ),
-                              onPressed: ()=>Navigator.pushNamed(context, 'profile')),
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_)=> FruitProvider())
+      ],
+          child: Container(
+        child: Scaffold(
+          backgroundColor: Colors.teal,
+          body: SafeArea(
+            child: Column( 
+              
+              children:<Widget>[
+                Row(children: <Widget>[
+                        Container(
+                            child: IconButton(
+                                icon: Icon(
+                                  Icons.menu,
+                                  color: Colors.white,
+                                ),
+                                onPressed: ()=>Navigator.pushNamed(context, 'profile')),
+                            decoration: BoxDecoration(
+                                //color: Colors.blue
+                                )),
+                        Spacer(),
+                        Container(
+                            child: IconButton(
+                                icon: Icon(
+                                  Icons.shopping_cart,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {}),
+                            decoration: BoxDecoration(
+                               // color: Colors.blue
+                                )),
+                      ]),
+                        SizedBox(height: 4),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 3, vertical: 2),
                           decoration: BoxDecoration(
-                              //color: Colors.blue
-                              )),
-                      Spacer(),
-                      Container(
-                          child: IconButton(
-                              icon: Icon(
-                                Icons.shopping_cart,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {}),
-                          decoration: BoxDecoration(
-                             // color: Colors.blue
-                              )),
-                    ]),
-                      SizedBox(height: 4),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 3, vertical: 2),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(19.5)),
-                        child: TextField(
-                          decoration: InputDecoration(
-                              hintText: "Buscar",
-                              icon: Icon(Icons.search),
-                              border: InputBorder.none),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(19.5)),
+                          child: TextField(
+                            decoration: InputDecoration(
+                                hintText: "Buscar",
+                                icon: Icon(Icons.search),
+                                border: InputBorder.none),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height:4),
-                    TabBar(
-                     controller: tabcontroller,
-                     indicatorPadding: EdgeInsets.all(4),
-                     indicatorColor: Colors.white,
-                     indicatorWeight: 6.0,
-                     labelColor: Colors.white,
-                     unselectedLabelColor: Colors.grey,
-                     isScrollable: true,
-                     tabs: <Widget>[
-                     Tab(child:Text(" Inicio ",style: TextStyle(fontSize: 20))),
-                     Tab(child:Text(" Frutas ",style: TextStyle(fontSize: 20))),
-                     Tab(child: Text(" Verduras ",style: TextStyle(fontSize: 20))),
-                     Tab(child:Text(" Granel ",style: TextStyle(fontSize: 20))),
-                     
-                     
-                   ]),
-                   Expanded(
-                    child: Container(
-                       child:
-                       TabBarView(
-                         controller: tabcontroller,
-                         children: <Widget>[
-                           _FruitView(context),
-                           Container(color: Colors.grey,),
-                           Container(),
-                           Container()
-                         ]
-                       )
-                     ),
-                   )
-            ]
+                      SizedBox(height:4),
+                      TabBar(
+                       controller: tabcontroller,
+                       indicatorPadding: EdgeInsets.all(4),
+                       indicatorColor: Colors.white,
+                       indicatorWeight: 6.0,
+                       labelColor: Colors.white,
+                       unselectedLabelColor: Colors.grey,
+                       isScrollable: true,
+                       tabs: <Widget>[
+                       Tab(child:Text(" Inicio ",style: TextStyle(fontSize: 20))),
+                       Tab(child:Text(" Frutas ",style: TextStyle(fontSize: 20))),
+                       Tab(child: Text(" Verduras ",style: TextStyle(fontSize: 20))),
+                       Tab(child:Text(" Granel ",style: TextStyle(fontSize: 20))),
+                       Tab(child:Text("Recetas", style:TextStyle(fontSize:20)))
+                       
+                       
+                     ]),
+                     Expanded(
+                      child: Container(
+                         child:
+                         TabBarView(
+                           controller: tabcontroller,
+                           children: <Widget>[
+                             _FruitView(context),
+                             FruitPage(),
+                             Container(color: Colors.grey,),
+                          
+
+                            
+
+
+                             Container(),
+                             RecipesSelectedPage()
+                           ]
+                         )
+                       ),
+                     )
+              ]
+            )
           )
-        )
+        ),
       ),
     );
                 
   }//////////////////////////////
 }
+
 
 Widget _popularCell(BuildContext context,String url) {
   return Padding(
@@ -123,7 +140,7 @@ Widget _popularCell(BuildContext context,String url) {
                 offset: Offset(-1.0, 2.0))
           ]),
       child: InkWell(
-        onTap: () => Navigator.pushNamed(context, 'detailProductView'),
+        onTap: (){},
         child: Column(
           children: <Widget>[
             Container(
@@ -145,49 +162,7 @@ Widget _popularCell(BuildContext context,String url) {
   );
 }
 
-Widget _fruitCell(BuildContext context,String url) {
-  return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-                      child: Row(children: <Widget>[
-              Container(
-                height: 75,
-                width: 75,
-                  child: Image.network(
-                "https://images.pexels.com/photos/947879/pexels-photo-947879.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                fit: BoxFit.cover,
-              )),
-              SizedBox(width: 40.0),
-              Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                SizedBox(height:20),
-                Text("FRUTA ...................",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.black)),
-                Text('\$34.00',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.black45))
-              ])
-            ]),
-          ),
-        ),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 2.0,
-                  spreadRadius: 0.0,
-                  offset: Offset(-1.0, 2.0))
-            ]),
-        height: 100,
-      ));
-}
+
 Widget _PersonalSelection(BuildContext context){
   return Container(
     color: Colors.white,
@@ -339,23 +314,6 @@ Widget _FruitView(BuildContext context){
     ),
   );
 }
-
-// ListView(
-//                       //physics: NeverScrollableScrollPhysics(),
-//                       primary: false,
-//                       shrinkWrap: true,
-//                       children: <Widget>[
-//                         _fruitCell(context),
-//                         _fruitCell(context),
-//                         _fruitCell(context),
-//                         _fruitCell(context),
-//                         _fruitCell(context),
-//                         _fruitCell(context),
-//                         _fruitCell(context),
-//                         _fruitCell(context)
-//                       ],
-//                     )
-
 
 
 

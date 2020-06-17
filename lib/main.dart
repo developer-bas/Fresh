@@ -4,6 +4,7 @@ import 'package:fresco_app/src/pages/fruitdetail_page.dart';
 import 'package:fresco_app/src/pages/main_page.dart';
 import 'package:fresco_app/src/pages/productsView_page.dart';
 import 'package:fresco_app/src/pages/profile_page.dart';
+import 'package:fresco_app/src/pages/recipesSelect_page.dart';
  
 void main() => runApp(MyApp());
  
@@ -24,7 +25,8 @@ class _MyAppState extends State<MyApp> {
        'detailProductView': (BuildContext context) => FruitDetailPage(),
        'mainPage': (BuildContext context) => MainPage(),
        'testFruit':(BuildContext context) => FruitToCart(),
-       'profile':(BuildContext context) => ProfilePage()
+       'profile':(BuildContext context) => ProfilePage(),
+       'rece':(BuildContext context) => RecipesSelectedPage()
      },
     );
   }

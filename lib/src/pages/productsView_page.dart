@@ -51,8 +51,10 @@ class _Paginas extends StatelessWidget {
 
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
-
-        FruitPage(),
+ Container(
+          color: Colors.green
+        ),
+       // FruitPage(),
         Container(
           color: Colors.green
         ),

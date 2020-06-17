@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fresco_app/model/product_model.dart';
 
 class FruitDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+final Fruit fruit = ModalRoute.of(context).settings.arguments;
+
+
     return Scaffold(
       backgroundColor: Color(0xff32a05f),
       body: Column(
@@ -28,7 +33,7 @@ class FruitDetailPage extends StatelessWidget {
                                           child: Container(
                         width: 300,
                         child: Text(
-                          "UVAS",
+                          fruit.name,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 32.0),
                         ),
@@ -79,13 +84,15 @@ class FruitDetailPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Container(
-                              width: 160.0,
-                              height: 205.0,
-                              child: Image.network(
-                                "https://www.lechepuleva.es/documents/13930/203222/uva_g.jpg/4ee0cd1b-f0d3-41cc-80b8-17e5a80b834a?t=1422618555000",
-                                fit: BoxFit.fill,
-                              ))
+                          Hero(
+                            tag: fruit.id,
+                                                      child: Container(
+                                width: 160.0,
+                                height: 205.0,
+                                child: Image.network(fruit.getImage(),
+                                  fit: BoxFit.fill,
+                                )),
+                          )
                         ]),
                     SizedBox(height: 10.0)
                   ],
