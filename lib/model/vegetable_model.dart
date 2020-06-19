@@ -1,4 +1,9 @@
+// To parse this JSON data, do
+//
+//     final data = dataFromJson(jsonString);
+
 import 'dart:convert';
+
 
 Data dataFromJson(String str) => Data.fromJson(json.decode(str));
 
@@ -6,22 +11,22 @@ String dataToJson(Data data) => json.encode(data.toJson());
 
 class Data {
     Data({
-        this.fruit,
+        this.vegetable,
     });
 
-    List<Fruit> fruit;
+    List<Vegetable> vegetable;
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
-        fruit: List<Fruit>.from(json["data"].map((x) => Fruit.fromJson(x))),
+        vegetable: List<Vegetable>.from(json["data"].map((x) => Vegetable.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "fruit": List<dynamic>.from(fruit.map((x) => x.toJson())),
+        "Vegetable": List<dynamic>.from(vegetable.map((x) => x.toJson())),
     };
 }
 
-class Fruit {
-    Fruit({
+class Vegetable {
+    Vegetable({
         this.available,
         this.category,
         this.id,
@@ -41,7 +46,7 @@ class Fruit {
     String productDescription;
     int stock;
 
-    factory Fruit.fromJson(Map<String, dynamic> json) => Fruit(
+    factory Vegetable.fromJson(Map<String, dynamic> json) => Vegetable(
         available: json["available"],
         category: json["category"],
         id: json["id"],
@@ -64,8 +69,7 @@ class Fruit {
     };
 
 
-
-    getImage(){
+getImage(){
       if( imgUrl == null){
         return 'https://labs357.com/nuevo/wp-content/themes/consultix/images/no-image-found-360x250.png';
       }else{
@@ -73,5 +77,5 @@ class Fruit {
         return  '$imgUrl';
       }
     }
-}
 
+}

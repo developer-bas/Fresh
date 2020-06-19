@@ -1,108 +1,97 @@
 import 'package:flutter/material.dart';
 import 'package:fresco_app/model/product_model.dart';
+import 'package:fresco_app/provider/shoppingcart_provider.dart';
+import 'package:provider/provider.dart';
 
-class FruitDetailPage extends StatelessWidget {
+
+class FruitToCart extends StatelessWidget {
+ 
+
+
+
   @override
   Widget build(BuildContext context) {
 
-final Fruit fruit = ModalRoute.of(context).settings.arguments;
-
-
+final cart = Provider.of<ShoppingCartProvider>(context);
+    final Fruit fruit = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      backgroundColor: Color(0xff32a05f),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 4,
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(80)),
-                  color: Colors.white),
-              child: Padding(
-                padding: const EdgeInsets.all(22.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(height: 15.0),
-                    IconButton(icon: Icon(Icons.arrow_back), onPressed: (){Navigator.pop(context);}),
-                    SizedBox(height: 2.0),
-                    Padding(
-                      padding: EdgeInsets.only(left:30),
-                                          child: Container(
-                        width: 300,
-                        child: Text(
-                          fruit.name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 32.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 9.0),
-                    Text(
-                      "La mejor selección ...",
-                      style: TextStyle(color: Colors.black45),
-                    ),
-                    SizedBox(height: 12.0),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Padding(
-                            padding: const EdgeInsets.only(bottom: 15.0),
-                            child: Text(
-                              '\$',
-                              style: TextStyle(color: Color(0xff32a05f)),
-                            )),
-                        SizedBox(width: 4.0),
-                        Text('53',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 50.0,
-                                color: Color(0xff32a05f)))
-                      ],
-                    ),
-                    Spacer(),
-                    Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Column(
-                            children: <Widget>[
-                              FloatingActionButton(
-                                onPressed: () {},
-                                heroTag: 'b1',
-                                backgroundColor: Color(0xff32a05f),
-                                child: Icon(Icons.add),
-                              ),
-                              SizedBox(height:10.0),
-                              FloatingActionButton(
-                                onPressed: () {},
-                                heroTag: 'b2',
-                                backgroundColor: Colors.white,
-                                child: Icon(Icons.remove,color: Color(0xff32a05f),),
-                              ),
-                            ],
-                          ),
-                          Hero(
-                            tag: fruit.id,
-                                                      child: Container(
-                                width: 160.0,
-                                height: 205.0,
-                                child: Image.network(fruit.getImage(),
-                                  fit: BoxFit.fill,
-                                )),
-                          )
-                        ]),
-                    SizedBox(height: 10.0)
-                  ],
-                ),
-              ),
-            ),
+      body: SingleChildScrollView(
+              child: Column(
+
+    children: <Widget>[
+        Stack(
+          children: <Widget>[
+        
+        Container(
+          height: 600,
+          width: double.infinity,
+          child:Hero(tag: fruit.id,
+          child: Image(image: NetworkImage(fruit.getImage()),fit: BoxFit.cover,)) ,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 40, left: 20),
+          child: IconButton(icon: Icon(Icons.arrow_back), onPressed: (){Navigator.pop(context);}),
+        ),
+        Column(
+          children: <Widget>[
+            SizedBox(height:560),
+            Container(
+
+       decoration: BoxDecoration(
+        borderRadius:
+          BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30)),
+               color: Colors.green[100]   ),
+           height: 500,
+           width: double.infinity,
+           child: Column(
+             crossAxisAlignment: CrossAxisAlignment.start,
+             children: <Widget>[
+               Padding(
+                 padding: const EdgeInsets.all(18.0),
+                 child: Text(fruit.name,style: TextStyle(fontSize: 30,
+                        fontWeight: FontWeight.bold, color: Colors.black87)),
+               ),
+               Padding(
+                 padding: const EdgeInsets.all(15.0),
+                 child: Text(" 1 kilogramo ",style: TextStyle(fontSize: 22,
+                          fontWeight: FontWeight.bold, color: Colors.green)),
+               ),
+               Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: Text(fruit.productDescription,style : TextStyle(fontSize:18, fontWeight: FontWeight.bold)),
+               ),
+               Row(
+                 children: <Widget>[
+                   Spacer(),
+                   InkWell(
+                      onTap:  () {
+                                        cart.getSumProduct(fruit);
+                                        Navigator.pop(context);
+                                      },
+                     child: Padding(
+                       padding: const EdgeInsets.all(18.0),
+                       child: Container(
+                       color: Colors.green[800],
+                       child: Padding(
+                         padding: const EdgeInsets.all(28.0),
+                         child: Text("Agregar al carrito",style: TextStyle(color:Colors.white)),
+                       ),
+                   ),
+                     )),
+                 ],
+               )
+             ]
+            
+           ),
+         )
+          ]
+        )
+          ]
+        ),
+     
+    ],
           ),
-          Expanded(flex: 1, child: Container())
-        ],
       ),
-    );
+      );
   }
 }

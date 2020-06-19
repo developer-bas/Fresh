@@ -193,7 +193,7 @@ Widget _Bottom(){
   return Container(
     
     child: Padding(padding: EdgeInsets.all(1),
-     child: Text("Versión : 0.0.3",style: TextStyle(
+     child: Text("Versión : 0.0.4",style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14.0)),
     ),
   );
